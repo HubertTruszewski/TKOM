@@ -113,38 +113,55 @@ Testować zamierzam głównie pisząc testy jednostkowe przy użyciu `JUnit`. Ka
 Składnia w formacie EBNF:
 
 ```
-program               = {function_declaration};
-function_declaration  = type, identifier, "(", {type, identifier}, ")", code_block;
-code_block            = "{", statement, "}";
-statement             = conditional_statement
-                      | varibale_declaration
-                      | assignment
-                      | return_statement
-                      | function_call;
-conditional_statement = if_statement | while_loop;
-if_statement          = "if (", expression, ")", code_block, ["else", code_block];
-while_loop            = "while (", expression, ")", code_block;
-variable_declaration  = type, identifier;
-assignment            = identifier, "=", expression, ";";
-return_statement      = "return", expression, ";";
-function_call         = identifier, "(", {type, expression}, ")", ";", ;
-expression            = number | identifier | function_call | string_literal | negation_expression;
-negation_expression   = "!", identifier;
-type                  = "int"
-                      | "string"
-                      | "double"
-                      | "bool"
-                      | "void"
-                      | "Cone"
-                      | "Cylinder"
-                      | "Sphere"
-                      | "Cuboid"
-                      | "Pyramid";
-identifier            = letter, {letter | digit};
-string_literal        = letter, {letter};
-letter                = "A" | "B" | ... | "Z" | "a" | "b" | ... | "z";
-number                = digit_non_zero, {digit};
-digit                 = "0" |
-digit_non_zero        = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" |;
+program                    = {function_declaration};
+function_declaration       = type, identifier, "(", {type, identifier}, ")", code_block;
+code_block                 = "{", statement, "}";
+statement                  = conditional_statement
+                           | varibale_declaration
+                           | assignment
+                           | return_statement
+                           | function_call;
+conditional_statement      = if_statement | while_loop;
+if_statement               = "if (", expression, ")", code_block, ["else", code_block];
+while_loop                 = "while (", expression, ")", code_block;
+variable_declaration       = type, identifier;
+assignment                 = identifier, "=", expression, ";";
+return_statement           = "return", expression, ";";
+function_call              = identifier, "(", {type, expression}, ")", ";", ;
+expression                 = number | identifier | function_call | string_literal | or_expression;
+or_expression              = and_expression, {or_operator, and_expression};
+and_expression             = coparison_expression, {and_operator, coparison_expression};
+coparison_expression       = addition_expression, {comparison_opearator, addition_expression};
+addition_expression        = multiplication_expression, {addition_operator, multiplication_expression};
+multiplication_expression  = negation_expression, {multiplication_operator, negation_expression};
+negation_expression        = [negation_operator], access_expression;
+access_expression          = identifier, {access_operator, identifier, "(", [simple_expression | identifier], ")"};
+simple_expression          = number | string_literal;
+type                       = "int"
+                           | "string"
+                           | "double"
+                           | "bool"
+                           | "void"
+                           | "Cone"
+                           | "Cylinder"
+                           | "Sphere"
+                           | "Cuboid"
+                           | "Pyramid";
+identifier                 = letter, {letter | digit};
+string_literal             = '"', string_element, {string_element}, '"';
+string_element             = letter | escape_character;
+letter                     = "A" | "B" | ... | "Z" | "a" | "b" | ... | "z";
+escape_character           = "\";
+number                     = digit_non_zero, {digit};
+digit                      = "0" |
+digit_non_zero             = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" |;
+
+addition_operator          = "+" | "-";
+multiplication_operator    = "*" | "/";
+negation_operator          = "!";
+access_operator            = ".";
+comparison_operator        = "==", "!=", ">", "<", ">=", "<=";
+and_operator               = "&&";
+or_operator                = "||";
 
 ```

@@ -572,7 +572,7 @@ public class LexerImplTest {
         assertEquals(lexer.token(), null);
         lexer.next();
         assertEquals(TokenType.TEXT, lexer.token().getTokenType());
-        assertEquals("Ala ma \\\" kota", lexer.token().getValue());
+        assertEquals("Ala ma \" kota", lexer.token().getValue());
         assertEquals(1, lexer.token().getPosition().getColumn());
         assertEquals(1, lexer.token().getPosition().getRow());
     }

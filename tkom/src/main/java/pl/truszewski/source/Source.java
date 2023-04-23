@@ -57,8 +57,8 @@ public class Source {
                 newLineCharactersChecked = true;
             }
 
-            if (Objects.equals(prevChar, secondNewLineChatacter)
-                    && Objects.equals(currentChar, firstNewLineCharacter)) {
+            if (secondNewLineChatacter != null && this.currentChar.equals(secondNewLineChatacter)
+                    && !this.prevChar.equals(firstNewLineCharacter)) {
                 errorHandler.handleError(new InvalidNewLineCharacterException("Invalid new line character"), position);
             }
             if (firstNewLineCharacter != null && Objects.equals(prevChar, firstNewLineCharacter)

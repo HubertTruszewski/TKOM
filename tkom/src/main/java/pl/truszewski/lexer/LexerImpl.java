@@ -1,5 +1,8 @@
 package pl.truszewski.lexer;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.apache.commons.text.StringEscapeUtils;
 
 import pl.truszewski.ErrorHandler;
@@ -77,12 +80,8 @@ public class LexerImpl implements Lexer {
     }
 
     private boolean tryBuildSimpleTokens() {
-        if (tryBuildSingleOrDoubleCharacterToken(">", "=", TokenType.GREATER_SIGN, TokenType.GREATER_OR_EQUAL)
-                || tryBuildSingleOrDoubleCharacterToken("<", "=", TokenType.LESS_SIGN, TokenType.LESS_OR_EQUAL)
-                || tryBuildSingleOrDoubleCharacterToken("!", "=", TokenType.EXCLAMATION_MARK, TokenType.NOT_EQUALS)
-                || tryBuildSingleOrDoubleCharacterToken("=", "=", TokenType.EQUAL_SIGN, TokenType.EQUALS)) {
+        if (tryBuildSingleOrDoubleCharacterToken())
             return true;
-        }
         if (this.character.equals("&")) {
             Position position = source.getPosition().clone();
             nextCharacter();
@@ -223,17 +222,29 @@ public class LexerImpl implements Lexer {
         this.character = source.getCharacter();
     }
 
-    private boolean tryBuildSingleOrDoubleCharacterToken(String oneCharacterToken, String secondTokenCharacter,
-            TokenType oneCharacterTokenType, TokenType doubleChataTokenType) {
+    private boolean tryBuildSingleOrDoubleCharacterToken() {
 
-        if (this.character.equals(oneCharacterToken)) {
+        Set<String> doubleCharacterTokensBeginnings = LexerUtils.doubleCharacterTokens.keySet().stream()
+                .map(doubleCharacterToken -> doubleCharacterToken.substring(0, 1)).collect(Collectors.toSet());
+        Set<String> commonTokenBeginnings = LexerUtils.singleCharacterTokens
+                .keySet()
+                .stream()
+                .filter(doubleCharacterTokensBeginnings::contains)
+                .collect(Collectors.toSet());
+
+        if (commonTokenBeginnings.contains(this.character)) {
             Position tokenPosition = source.getPosition().clone();
+            String firstCharacter = this.character;
             nextCharacter();
-            if (this.character.equals(secondTokenCharacter)) {
-                this.currentToken = new EmptyToken(doubleChataTokenType, tokenPosition);
+            String doubleCharacterToken = firstCharacter.concat(this.character);
+
+            if (LexerUtils.doubleCharacterTokens.containsKey(doubleCharacterToken)) {
+                this.currentToken = new EmptyToken(LexerUtils.doubleCharacterTokens.get(doubleCharacterToken),
+                        tokenPosition);
                 return true;
             }
-            this.currentToken = new EmptyToken(oneCharacterTokenType, tokenPosition);
+
+            this.currentToken = new EmptyToken(LexerUtils.singleCharacterTokens.get(firstCharacter), tokenPosition);
             return true;
         }
         return false;

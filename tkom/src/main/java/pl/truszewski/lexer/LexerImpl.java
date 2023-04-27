@@ -34,12 +34,7 @@ public class LexerImpl implements Lexer {
     }
 
     @Override
-    public Token token() {
-        return this.currentToken;
-    }
-
-    @Override
-    public void next() {
+    public Token next() {
         while ((this.character != null && this.character.isBlank()) && !this.source.isEOF())
             nextCharacter();
         if (tryBuildEOFToken()
@@ -51,6 +46,7 @@ public class LexerImpl implements Lexer {
         } else {
             errorHandler.handleError(new InvalidTokenException("Unknown token"), source.getPosition());
         }
+        return this.currentToken;
     }
 
     private boolean tryBuildEOFToken() {

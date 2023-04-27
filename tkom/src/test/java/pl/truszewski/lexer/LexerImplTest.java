@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import pl.truszewski.ErrorHandler;
 import pl.truszewski.source.Source;
+import pl.truszewski.token.Token;
 import pl.truszewski.token.TokenType;
 
 public class LexerImplTest {
@@ -21,11 +22,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.LEFT_ROUND_BRACKET, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.LEFT_ROUND_BRACKET, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -34,11 +34,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.RIGHT_ROUND_BRACKET, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.RIGHT_ROUND_BRACKET, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -47,11 +46,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.LEFT_SQUARE_BRACKET, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.LEFT_SQUARE_BRACKET, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -60,11 +58,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.RIGHT_SQUARE_BRACKET, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.RIGHT_SQUARE_BRACKET, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -73,11 +70,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.LEFT_CURLY_BRACKET, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.LEFT_CURLY_BRACKET, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -86,11 +82,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.RIGHT_CURLY_BRACKET, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.RIGHT_CURLY_BRACKET, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -99,11 +94,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.COMMA, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.COMMA, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -112,11 +106,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.DOT, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.DOT, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -125,11 +118,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.EQUAL_SIGN, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.EQUAL_SIGN, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -138,11 +130,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.GREATER_SIGN, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.GREATER_SIGN, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -151,11 +142,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.LESS_SIGN, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.LESS_SIGN, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -164,11 +154,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.EXCLAMATION_MARK, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.EXCLAMATION_MARK, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -177,11 +166,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.SEMICOLON, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.SEMICOLON, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -190,11 +178,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.PLUS_SIGN, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.PLUS_SIGN, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -203,11 +190,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.MINUS_SIGN, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.MINUS_SIGN, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -216,11 +202,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.ASTERISK_SIGN, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.ASTERISK_SIGN, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -229,11 +214,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.SLASH, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.SLASH, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -242,11 +226,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.BACKSLASH, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.BACKSLASH, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -255,11 +238,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.GREATER_OR_EQUAL, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.GREATER_OR_EQUAL, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -268,12 +250,11 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.IDENTIFIER, lexer.token().getTokenType());
-        assertEquals("abc", lexer.token().getValue());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.IDENTIFIER, token.getTokenType());
+        assertEquals("abc", token.getValue());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -282,12 +263,11 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.IDENTIFIER, lexer.token().getTokenType());
-        assertEquals("ab34c", lexer.token().getValue());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.IDENTIFIER, token.getTokenType());
+        assertEquals("ab34c", token.getValue());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -296,11 +276,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.RETURN, lexer.token().getTokenType());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.RETURN, token.getTokenType());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -309,11 +288,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.WHILE, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.WHILE, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -322,11 +300,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.IF, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.IF, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -335,11 +312,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.AS, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.AS, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -348,11 +324,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.INTEGER, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.INTEGER, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -361,11 +336,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.STRING, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.STRING, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -374,11 +348,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.DOUBLE, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.DOUBLE, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -387,11 +360,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.BOOL, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.BOOL, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -400,11 +372,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.VOID, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.VOID, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -413,11 +384,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.CONE, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.CONE, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -426,11 +396,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.CYLINDER, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.CYLINDER, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -439,11 +408,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.SPHERE, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.SPHERE, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -452,11 +420,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.CUBOID, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.CUBOID, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -465,11 +432,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.PYRAMID, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.PYRAMID, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -478,11 +444,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.SCREEN, lexer.token().getTokenType());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.SCREEN, token.getTokenType());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -491,12 +456,11 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.INT_NUMBER, lexer.token().getTokenType());
-        assertEquals(124, lexer.token().getValue());
-        assertEquals(3, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.INT_NUMBER, token.getTokenType());
+        assertEquals(124, token.getValue());
+        assertEquals(3, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -505,12 +469,11 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.DOUBLE_NUMBER, lexer.token().getTokenType());
-        assertEquals(45.98, lexer.token().getValue());
-        assertEquals(4, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.DOUBLE_NUMBER, token.getTokenType());
+        assertEquals(45.98, token.getValue());
+        assertEquals(4, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -519,21 +482,20 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.IDENTIFIER, lexer.token().getTokenType());
-        assertEquals("abc", lexer.token().getValue());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
-        lexer.next();
-        assertEquals(TokenType.INT_NUMBER, lexer.token().getTokenType());
-        assertEquals(124, lexer.token().getValue());
-        assertEquals(6, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
-        lexer.next();
-        assertEquals(TokenType.EOF, lexer.token().getTokenType());
-        assertEquals(10, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.IDENTIFIER, token.getTokenType());
+        assertEquals("abc", token.getValue());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+        token = lexer.next();
+        assertEquals(TokenType.INT_NUMBER, token.getTokenType());
+        assertEquals(124, token.getValue());
+        assertEquals(6, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+        token = lexer.next();
+        assertEquals(TokenType.EOF, token.getTokenType());
+        assertEquals(10, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -542,11 +504,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.EOF, lexer.token().getTokenType());
-        assertEquals(1, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.EOF, token.getTokenType());
+        assertEquals(1, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -555,12 +516,11 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.TEXT, lexer.token().getTokenType());
-        assertEquals("Ala ma kota", lexer.token().getValue());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.TEXT, token.getTokenType());
+        assertEquals("Ala ma kota", token.getValue());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -569,12 +529,11 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.TEXT, lexer.token().getTokenType());
-        assertEquals("Ala ma \" kota", lexer.token().getValue());
-        assertEquals(1, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.TEXT, token.getTokenType());
+        assertEquals("Ala ma \" kota", token.getValue());
+        assertEquals(1, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 
     @Test
@@ -583,11 +542,10 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        assertEquals(lexer.token(), null);
-        lexer.next();
-        assertEquals(TokenType.COMMENT, lexer.token().getTokenType());
-        assertEquals(" ala ma kota", lexer.token().getValue());
-        assertEquals(2, lexer.token().getPosition().getColumn());
-        assertEquals(1, lexer.token().getPosition().getRow());
+        Token token = lexer.next();
+        assertEquals(TokenType.COMMENT, token.getTokenType());
+        assertEquals(" ala ma kota", token.getValue());
+        assertEquals(2, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
     }
 }

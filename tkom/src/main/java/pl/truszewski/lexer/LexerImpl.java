@@ -108,19 +108,9 @@ public class LexerImpl implements Lexer {
             return true;
         }
 
-        if (tryBuildOneCharacterToken("(", TokenType.LEFT_ROUND_BRACKET)
-                || tryBuildOneCharacterToken(")", TokenType.RIGHT_ROUND_BRACKET)
-                || tryBuildOneCharacterToken("[", TokenType.LEFT_SQUARE_BRACKET)
-                || tryBuildOneCharacterToken("]", TokenType.RIGHT_SQUARE_BRACKET)
-                || tryBuildOneCharacterToken("{", TokenType.LEFT_CURLY_BRACKET)
-                || tryBuildOneCharacterToken("}", TokenType.RIGHT_CURLY_BRACKET)
-                || tryBuildOneCharacterToken(".", TokenType.DOT)
-                || tryBuildOneCharacterToken(",", TokenType.COMMA)
-                || tryBuildOneCharacterToken("+", TokenType.PLUS_SIGN)
-                || tryBuildOneCharacterToken("-", TokenType.MINUS_SIGN)
-                || tryBuildOneCharacterToken("*", TokenType.ASTERISK_SIGN)
-                || tryBuildOneCharacterToken("\\", TokenType.BACKSLASH)
-                || tryBuildOneCharacterToken(";", TokenType.SEMICOLON)) {
+        if (LexerUtils.singleCharacterTokens.containsKey(this.character)) {
+            this.currentToken = new EmptyToken(LexerUtils.singleCharacterTokens.get(this.character),
+                    source.getPosition().clone());
             return true;
         }
 
@@ -235,6 +225,7 @@ public class LexerImpl implements Lexer {
 
     private boolean tryBuildSingleOrDoubleCharacterToken(String oneCharacterToken, String secondTokenCharacter,
             TokenType oneCharacterTokenType, TokenType doubleChataTokenType) {
+
         if (this.character.equals(oneCharacterToken)) {
             Position tokenPosition = source.getPosition().clone();
             nextCharacter();
@@ -247,13 +238,4 @@ public class LexerImpl implements Lexer {
         }
         return false;
     }
-
-    private boolean tryBuildOneCharacterToken(String character, TokenType tokenType) {
-        if (this.character.equals(character)) {
-            this.currentToken = new EmptyToken(tokenType, source.getPosition().clone());
-            return true;
-        }
-        return false;
-    }
-
 }

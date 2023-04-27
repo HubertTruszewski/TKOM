@@ -22,6 +22,35 @@ public class LexerUtils {
             Map.entry("Pyramid", TokenType.PYRAMID),
             Map.entry("Screen", TokenType.SCREEN));
 
+    public static final Map<String, TokenType> singleCharacterTokens = Map.ofEntries(
+            Map.entry("(", TokenType.LEFT_ROUND_BRACKET),
+            Map.entry(")", TokenType.RIGHT_ROUND_BRACKET),
+            Map.entry("[", TokenType.LEFT_SQUARE_BRACKET),
+            Map.entry("]", TokenType.RIGHT_SQUARE_BRACKET),
+            Map.entry("{", TokenType.LEFT_CURLY_BRACKET),
+            Map.entry("}", TokenType.RIGHT_CURLY_BRACKET),
+            Map.entry(",", TokenType.COMMA),
+            Map.entry(".", TokenType.DOT),
+            Map.entry("=", TokenType.EQUAL_SIGN),
+            Map.entry(">", TokenType.GREATER_SIGN),
+            Map.entry("<", TokenType.LESS_SIGN),
+            Map.entry("!", TokenType.EXCLAMATION_MARK),
+            Map.entry(";", TokenType.SEMICOLON),
+            Map.entry("+", TokenType.PLUS_SIGN),
+            Map.entry("-", TokenType.MINUS_SIGN),
+            Map.entry("*", TokenType.ASTERISK_SIGN),
+            Map.entry("/", TokenType.SLASH),
+            Map.entry("\\", TokenType.BACKSLASH));
+
+    public static final Map<String, TokenType> doubleCharacterTokens = Map.ofEntries(
+            Map.entry(">=", TokenType.GREATER_OR_EQUAL),
+            Map.entry("<=", TokenType.LESS_OR_EQUAL),
+            Map.entry("==", TokenType.EQUALS),
+            Map.entry("!=", TokenType.NOT_EQUALS),
+            Map.entry("&&", TokenType.AND),
+            Map.entry("||", TokenType.OR),
+            Map.entry("//", TokenType.COMMENT));
+
     private LexerUtils() {
     }
 }

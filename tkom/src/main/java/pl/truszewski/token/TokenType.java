@@ -51,6 +51,8 @@ public enum TokenType {
     INT_NUMBER("Int number", null),
     DOUBLE_NUMBER("Double number", null),
 
+    UKNKOWN("Unknown token", null),
+
     EOF("End of file", null);
 
     private final String name;

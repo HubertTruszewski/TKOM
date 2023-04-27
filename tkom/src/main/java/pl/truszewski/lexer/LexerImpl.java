@@ -42,11 +42,10 @@ public class LexerImpl implements Lexer {
                 || tryBuildIdentOrKeyword()
                 || tryBuildString()
                 || tryBuildSlashOrComment()
-                || tryBuildSimpleTokens()) {
-        } else {
-            errorHandler.handleError(new InvalidTokenException("Unknown token"), source.getPosition());
-        }
-        return this.currentToken;
+                || tryBuildSimpleTokens())
+            return this.currentToken;
+        errorHandler.handleError(new InvalidTokenException("Unknown token"), source.getPosition().clone());
+        return new EmptyToken(TokenType.UKNKOWN, source.getPosition().clone());
     }
 
     private boolean tryBuildEOFToken() {
@@ -85,6 +84,7 @@ public class LexerImpl implements Lexer {
             return true;
         }
         if (this.character.equals("&")) {
+            Position position = source.getPosition().clone();
             nextCharacter();
             if (this.character.equals("&")) {
                 this.currentToken = new EmptyToken(TokenType.AND, source.getPosition().clone());
@@ -92,10 +92,11 @@ public class LexerImpl implements Lexer {
             }
             errorHandler.handleError(new MissingSecondTokenCharacter("Missing second token character"),
                     source.getPosition().clone());
-            this.currentToken = null;
+            this.currentToken = new EmptyToken(TokenType.UKNKOWN, position);
             return true;
         }
         if (this.character.equals("|")) {
+            Position position = source.getPosition().clone();
             nextCharacter();
             if (this.character.equals("||")) {
                 this.currentToken = new EmptyToken(TokenType.AND, source.getPosition().clone());
@@ -103,7 +104,7 @@ public class LexerImpl implements Lexer {
             }
             errorHandler.handleError(new MissingSecondTokenCharacter("Missing second token character"),
                     source.getPosition().clone());
-            this.currentToken = null;
+            this.currentToken = new EmptyToken(TokenType.UKNKOWN, position);
             return true;
         }
 
@@ -139,29 +140,31 @@ public class LexerImpl implements Lexer {
                     value = value * 10 + (character.codePointAt(0) - '0');
                 } else {
                     errorHandler.handleError(new TooLargeNumberException("Too large number"), position);
+                    this.currentToken = new EmptyToken(TokenType.UKNKOWN, position);
                 }
                 nextCharacter();
             }
         }
         if (this.character.equals(".")) {
-            int decimal_digit_counter = 0;
+            int decimalDigitCounter = 0;
             nextCharacter();
             int fraction = this.character.codePointAt(0) - '0';
             if (fraction != 0) {
-                ++decimal_digit_counter;
+                ++decimalDigitCounter;
                 nextCharacter();
                 while (Character.isDigit(this.character.codePointAt(0))) {
                     int decimal = this.character.codePointAt(0) - '0';
                     if ((Integer.MAX_VALUE - decimal) / 10 - fraction > 0) {
                         fraction = fraction * 10 + (character.codePointAt(0) - '0');
-                        ++decimal_digit_counter;
+                        ++decimalDigitCounter;
                     } else {
                         errorHandler.handleError(new TooLargeNumberException("Too large number"), position);
+                        this.currentToken = new EmptyToken(TokenType.UKNKOWN, position);
                     }
                     nextCharacter();
                 }
             }
-            this.currentToken = new DoubleToken(value + (fraction * Math.pow(10, -decimal_digit_counter)),
+            this.currentToken = new DoubleToken(value + (fraction * Math.pow(10, -decimalDigitCounter)),
                     position);
 
         } else {
@@ -208,40 +211,21 @@ public class LexerImpl implements Lexer {
                 nextCharacter();
                 if (stringBuilder.length() > MAX_IDENTIFIER_LENGTH) {
                     errorHandler.handleError(new TooLongIdentifierException("Too long identifier"), tokenPosition);
+                    this.currentToken = new EmptyToken(TokenType.UKNKOWN, tokenPosition);
                     return true;
                 }
             }
 
-            if (tryBuildKeyword(stringBuilder.toString(), "return", TokenType.RETURN, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "while", TokenType.WHILE, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "if", TokenType.IF, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "as", TokenType.AS, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "int", TokenType.INTEGER, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "string", TokenType.STRING, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "double", TokenType.DOUBLE, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "bool", TokenType.BOOL, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "void", TokenType.VOID, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "Cone", TokenType.CONE, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "Cylinder", TokenType.CYLINDER, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "Sphere", TokenType.SPHERE, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "Cuboid", TokenType.CUBOID, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "Pyramid", TokenType.PYRAMID, tokenPosition)
-                    || tryBuildKeyword(stringBuilder.toString(), "Screen", TokenType.SCREEN, tokenPosition)) {
+            if (LexerUtils.keywordsMap.containsKey(stringBuilder.toString())) {
+                this.currentToken = new EmptyToken(LexerUtils.keywordsMap.get(stringBuilder.toString()), tokenPosition);
                 return true;
             }
+
             this.currentToken = new StringToken(TokenType.IDENTIFIER, stringBuilder.toString(), tokenPosition);
             return true;
         }
         return false;
 
-    }
-
-    private boolean tryBuildKeyword(String text, String keyword, TokenType tokenType, Position position) {
-        if (text.toString().equals(keyword)) {
-            this.currentToken = new EmptyToken(tokenType, position);
-            return true;
-        }
-        return false;
     }
 
     private void nextCharacter() {

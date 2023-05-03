@@ -3,8 +3,6 @@ package pl.truszewski.lexer;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.text.StringEscapeUtils;
-
 import pl.truszewski.ErrorHandler;
 import pl.truszewski.error.InvalidTokenException;
 import pl.truszewski.error.MissingSecondTokenCharacter;
@@ -161,8 +159,10 @@ public class LexerImpl implements Lexer {
                     stringBuilder.append(character);
                 }
                 nextCharacter();
+                if (character == null)
+                    process = false;
             }
-            String value = StringEscapeUtils.unescapeJava(stringBuilder.toString());
+            String value = unescapeString(stringBuilder.toString());
             this.currentToken = new StringToken(TokenType.TEXT, value, position);
             return true;
         }
@@ -251,5 +251,26 @@ public class LexerImpl implements Lexer {
             nextCharacter();
         }
         return value;
+    }
+
+    private String unescapeString(String input) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String currentChar;
+        int i = 0;
+        while (i < input.length()) {
+            currentChar = input.substring(i, i + 1);
+            if (currentChar.equals("\\")) {
+                String nextChar = input.substring(i + 1, i + 2);
+                Integer newChar = LexerUtils.escapeCharactersMap.get(nextChar);
+                if (newChar != null) {
+                    stringBuilder.append(Character.toString(newChar));
+                    i += 2;
+                }
+            } else {
+                stringBuilder.append(currentChar);
+                ++i;
+            }
+        }
+        return stringBuilder.toString();
     }
 }

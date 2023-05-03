@@ -12,7 +12,6 @@ import pl.truszewski.token.Position;
 public class Source {
     private BufferedReader reader;
     private Position position;
-    private String prevChar = null;
     private String currentChar = null;
     private String nextChar = null;
     private boolean newLineCharactersChecked = false;
@@ -32,10 +31,11 @@ public class Source {
     }
 
     public void nextCharacter() {
+        String prevChar = null;
         try {
             if (nextChar == null)
                 nextChar = readCharacter();
-            this.prevChar = this.currentChar;
+            prevChar = this.currentChar;
             this.currentChar = this.nextChar;
             this.nextChar = readCharacter();
             position.nextColumn();
@@ -58,18 +58,15 @@ public class Source {
             }
 
             if (secondNewLineChatacter != null && this.currentChar.equals(secondNewLineChatacter)
-                    && !this.prevChar.equals(firstNewLineCharacter)) {
+                    && !prevChar.equals(firstNewLineCharacter)) {
                 errorHandler.handleError(new InvalidNewLineCharacterException("Invalid new line character"), position);
             }
-            if (firstNewLineCharacter != null && Objects.equals(prevChar, firstNewLineCharacter)
-                    && secondNewLineChatacter == null) {
-                position.nextRow();
-                position.nextColumn();
-            } else if (Objects.equals(prevChar, secondNewLineChatacter) && secondNewLineChatacter != null) {
+            if ((firstNewLineCharacter != null && Objects.equals(prevChar, firstNewLineCharacter)
+                    && secondNewLineChatacter == null)
+                    || (Objects.equals(prevChar, secondNewLineChatacter) && secondNewLineChatacter != null)) {
                 position.nextRow();
                 position.nextColumn();
             }
-
         } catch (IOException e) {
             errorHandler.handleError(e, position);
         }

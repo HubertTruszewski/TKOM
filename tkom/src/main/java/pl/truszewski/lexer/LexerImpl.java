@@ -8,7 +8,6 @@ import org.apache.commons.text.StringEscapeUtils;
 import pl.truszewski.ErrorHandler;
 import pl.truszewski.error.InvalidTokenException;
 import pl.truszewski.error.MissingSecondTokenCharacter;
-import pl.truszewski.error.TooLargeNumberException;
 import pl.truszewski.error.TooLongIdentifierException;
 import pl.truszewski.error.TooLongStringException;
 import pl.truszewski.source.Source;
@@ -27,6 +26,7 @@ public class LexerImpl implements Lexer {
     private String character;
     private Token currentToken;
     private ErrorHandler errorHandler;
+    private int decimalDigitCounter;
 
     public LexerImpl(Source source, ErrorHandler errorHandler) {
         this.source = source;
@@ -63,7 +63,7 @@ public class LexerImpl implements Lexer {
         if (this.character.equals("/")) {
             Position tokenPosition = new Position(source.getPosition());
             nextCharacter();
-            if (this.character.equals("/")) {
+            if (this.character != null && this.character.equals("/")) {
                 nextCharacter();
                 StringBuilder stringBuilder = new StringBuilder();
                 while (!source.isEOF() && !this.character.equals("\n") && !this.character.equals("\r")) {
@@ -80,8 +80,11 @@ public class LexerImpl implements Lexer {
     }
 
     private boolean tryBuildSimpleTokens() {
-        if (tryBuildSingleOrDoubleCharacterToken())
+        if (tryBuildSingleOrDoubleCharacterToken()) {
+            nextCharacter();
             return true;
+        }
+
         if (this.character.equals("&")) {
             Position position = new Position(source.getPosition());
             nextCharacter();
@@ -122,36 +125,14 @@ public class LexerImpl implements Lexer {
         int value = this.character.codePointAt(0) - '0';
         Position position = new Position(source.getPosition());
         if (value != 0) {
-            nextCharacter();
-            while (Character.isDigit(this.character.codePointAt(0))) {
-                int decimal = this.character.codePointAt(0) - '0';
-                if ((Integer.MAX_VALUE - decimal) / 10 - value > 0) {
-                    value = value * 10 + (character.codePointAt(0) - '0');
-                } else {
-                    errorHandler.handleError(new TooLargeNumberException("Too large number"), position);
-                    this.currentToken = new EmptyToken(TokenType.UKNKOWN, position);
-                }
-                nextCharacter();
-            }
+            value = processIntNumber();
         }
-        if (this.character.equals(".")) {
-            int decimalDigitCounter = 0;
+        if (this.character != null && this.character.equals(".")) {
+            decimalDigitCounter = 0;
             nextCharacter();
             int fraction = this.character.codePointAt(0) - '0';
             if (fraction != 0) {
-                ++decimalDigitCounter;
-                nextCharacter();
-                while (Character.isDigit(this.character.codePointAt(0))) {
-                    int decimal = this.character.codePointAt(0) - '0';
-                    if ((Integer.MAX_VALUE - decimal) / 10 - fraction > 0) {
-                        fraction = fraction * 10 + (character.codePointAt(0) - '0');
-                        ++decimalDigitCounter;
-                    } else {
-                        errorHandler.handleError(new TooLargeNumberException("Too large number"), position);
-                        this.currentToken = new EmptyToken(TokenType.UKNKOWN, position);
-                    }
-                    nextCharacter();
-                }
+                fraction = processIntNumber();
             }
             this.currentToken = new DoubleToken(value + (fraction * Math.pow(10, -decimalDigitCounter)),
                     position);
@@ -194,8 +175,8 @@ public class LexerImpl implements Lexer {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(this.character);
             nextCharacter();
-            while (Character.isLetter(this.character.codePointAt(0))
-                    || Character.isDigit(this.character.codePointAt(0))) {
+            while (this.character != null && (Character.isLetter(this.character.codePointAt(0))
+                    || Character.isDigit(this.character.codePointAt(0)))) {
                 stringBuilder.append(this.character);
                 nextCharacter();
                 if (stringBuilder.length() > MAX_IDENTIFIER_LENGTH) {
@@ -235,21 +216,40 @@ public class LexerImpl implements Lexer {
                 .filter(doubleCharacterTokensBeginnings::contains)
                 .collect(Collectors.toSet());
 
+        Position tokenPosition = new Position(source.getPosition());
+        String firstCharacter = this.character;
         if (commonTokenBeginnings.contains(this.character)) {
-            Position tokenPosition = new Position(source.getPosition());
-            String firstCharacter = this.character;
-            nextCharacter();
-            String doubleCharacterToken = firstCharacter.concat(this.character);
 
-            if (LexerUtils.doubleCharacterTokens.containsKey(doubleCharacterToken)) {
+            nextCharacter();
+            String doubleCharacterToken = character != null ? firstCharacter.concat(this.character) : null;
+
+            if (doubleCharacterToken != null && LexerUtils.doubleCharacterTokens.containsKey(doubleCharacterToken)) {
                 this.currentToken = new EmptyToken(LexerUtils.doubleCharacterTokens.get(doubleCharacterToken),
                         tokenPosition);
                 return true;
             }
-
+            this.currentToken = new EmptyToken(LexerUtils.singleCharacterTokens.get(firstCharacter), tokenPosition);
+            return true;
+        }
+        if (LexerUtils.singleCharacterTokens.containsKey(character)) {
             this.currentToken = new EmptyToken(LexerUtils.singleCharacterTokens.get(firstCharacter), tokenPosition);
             return true;
         }
         return false;
+    }
+
+    private Integer processIntNumber() {
+        int value = 0;
+        while (this.character != null && Character.isDigit(this.character.codePointAt(0))) {
+            int decimal = this.character.codePointAt(0) - '0';
+            if ((Integer.MAX_VALUE - decimal) / 10 - value > 0) {
+                value = value * 10 + (character.codePointAt(0) - '0');
+                ++decimalDigitCounter;
+            } else {
+                return null;
+            }
+            nextCharacter();
+        }
+        return value;
     }
 }

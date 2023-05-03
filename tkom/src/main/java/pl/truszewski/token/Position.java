@@ -9,6 +9,11 @@ public class Position {
         this.column = 0;
     }
 
+    public Position(Position position) {
+        this.column = position.column;
+        this.row = position.row;
+    }
+
     private Position(int row, int column) {
         this.row = row;
         this.column = column;
@@ -29,10 +34,6 @@ public class Position {
     public void nextRow() {
         ++this.row;
         this.column = 0;
-    }
-
-    public Position clone() {
-        return new Position(this.row, this.column);
     }
 
     @Override

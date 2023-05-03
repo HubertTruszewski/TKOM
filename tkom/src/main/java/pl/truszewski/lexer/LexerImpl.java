@@ -47,13 +47,13 @@ public class LexerImpl implements Lexer {
                 || tryBuildSlashOrComment()
                 || tryBuildSimpleTokens())
             return this.currentToken;
-        errorHandler.handleError(new InvalidTokenException("Unknown token"), source.getPosition().clone());
-        return new EmptyToken(TokenType.UKNKOWN, source.getPosition().clone());
+        errorHandler.handleError(new InvalidTokenException("Unknown token"), new Position(source.getPosition()));
+        return new EmptyToken(TokenType.UKNKOWN, new Position(source.getPosition()));
     }
 
     private boolean tryBuildEOFToken() {
         if (this.source.isEOF()) {
-            this.currentToken = new EmptyToken(TokenType.EOF, source.getPosition().clone());
+            this.currentToken = new EmptyToken(TokenType.EOF, new Position(source.getPosition()));
             return true;
         }
         return false;
@@ -61,7 +61,7 @@ public class LexerImpl implements Lexer {
 
     private boolean tryBuildSlashOrComment() {
         if (this.character.equals("/")) {
-            Position tokenPosition = this.source.getPosition().clone();
+            Position tokenPosition = new Position(source.getPosition());
             nextCharacter();
             if (this.character.equals("/")) {
                 nextCharacter();
@@ -83,33 +83,33 @@ public class LexerImpl implements Lexer {
         if (tryBuildSingleOrDoubleCharacterToken())
             return true;
         if (this.character.equals("&")) {
-            Position position = source.getPosition().clone();
+            Position position = new Position(source.getPosition());
             nextCharacter();
             if (this.character.equals("&")) {
-                this.currentToken = new EmptyToken(TokenType.AND, source.getPosition().clone());
+                this.currentToken = new EmptyToken(TokenType.AND, new Position(source.getPosition()));
                 return true;
             }
             errorHandler.handleError(new MissingSecondTokenCharacter("Missing second token character"),
-                    source.getPosition().clone());
+                    new Position(source.getPosition()));
             this.currentToken = new EmptyToken(TokenType.UKNKOWN, position);
             return true;
         }
         if (this.character.equals("|")) {
-            Position position = source.getPosition().clone();
+            Position position = new Position(source.getPosition());
             nextCharacter();
             if (this.character.equals("||")) {
-                this.currentToken = new EmptyToken(TokenType.AND, source.getPosition().clone());
+                this.currentToken = new EmptyToken(TokenType.AND, new Position(source.getPosition()));
                 return true;
             }
             errorHandler.handleError(new MissingSecondTokenCharacter("Missing second token character"),
-                    source.getPosition().clone());
+                    new Position(source.getPosition()));
             this.currentToken = new EmptyToken(TokenType.UKNKOWN, position);
             return true;
         }
 
         if (LexerUtils.singleCharacterTokens.containsKey(this.character)) {
             this.currentToken = new EmptyToken(LexerUtils.singleCharacterTokens.get(this.character),
-                    source.getPosition().clone());
+                    new Position(source.getPosition()));
             return true;
         }
 
@@ -120,7 +120,7 @@ public class LexerImpl implements Lexer {
         if (!Character.isDigit(this.character.codePointAt(0)))
             return false;
         int value = this.character.codePointAt(0) - '0';
-        Position position = this.source.getPosition().clone();
+        Position position = new Position(source.getPosition());
         if (value != 0) {
             nextCharacter();
             while (Character.isDigit(this.character.codePointAt(0))) {
@@ -165,7 +165,7 @@ public class LexerImpl implements Lexer {
     private boolean tryBuildString() {
         StringBuilder stringBuilder = new StringBuilder();
         if (this.character.equals("\"")) {
-            Position position = source.getPosition().clone();
+            Position position = new Position(source.getPosition());
             nextCharacter();
             boolean process = true;
 
@@ -190,7 +190,7 @@ public class LexerImpl implements Lexer {
 
     private boolean tryBuildIdentOrKeyword() {
         if (Character.isLetter(this.character.codePointAt(0))) {
-            Position tokenPosition = this.source.getPosition().clone();
+            Position tokenPosition = new Position(source.getPosition());
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(this.character);
             nextCharacter();
@@ -224,8 +224,11 @@ public class LexerImpl implements Lexer {
 
     private boolean tryBuildSingleOrDoubleCharacterToken() {
 
-        Set<String> doubleCharacterTokensBeginnings = LexerUtils.doubleCharacterTokens.keySet().stream()
-                .map(doubleCharacterToken -> doubleCharacterToken.substring(0, 1)).collect(Collectors.toSet());
+        Set<String> doubleCharacterTokensBeginnings = LexerUtils.doubleCharacterTokens
+                .keySet()
+                .stream()
+                .map(doubleCharacterToken -> doubleCharacterToken.substring(0, 1))
+                .collect(Collectors.toSet());
         Set<String> commonTokenBeginnings = LexerUtils.singleCharacterTokens
                 .keySet()
                 .stream()
@@ -233,7 +236,7 @@ public class LexerImpl implements Lexer {
                 .collect(Collectors.toSet());
 
         if (commonTokenBeginnings.contains(this.character)) {
-            Position tokenPosition = source.getPosition().clone();
+            Position tokenPosition = new Position(source.getPosition());
             String firstCharacter = this.character;
             nextCharacter();
             String doubleCharacterToken = firstCharacter.concat(this.character);

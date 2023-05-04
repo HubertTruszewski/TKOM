@@ -120,17 +120,25 @@ public class LexerImpl implements Lexer {
     private boolean tryBuildNumber() {
         if (!Character.isDigit(this.character.codePointAt(0)))
             return false;
-        int value = this.character.codePointAt(0) - '0';
+        Integer value = this.character.codePointAt(0) - '0';
         Position position = new Position(source.getPosition());
         if (value != 0) {
             value = processIntNumber();
+            if (value == null) {
+                this.currentToken = new EmptyToken(TokenType.UKNKOWN, position);
+                return true;
+            }
         }
         if (this.character != null && this.character.equals(".")) {
             decimalDigitCounter = 0;
             nextCharacter();
-            int fraction = this.character.codePointAt(0) - '0';
+            Integer fraction = this.character.codePointAt(0) - '0';
             if (fraction != 0) {
                 fraction = processIntNumber();
+                if (fraction == null) {
+                    this.currentToken = new EmptyToken(TokenType.UKNKOWN, position);
+                    return true;
+                }
             }
             this.currentToken = new DoubleToken(value + (fraction * Math.pow(10, -decimalDigitCounter)),
                     position);

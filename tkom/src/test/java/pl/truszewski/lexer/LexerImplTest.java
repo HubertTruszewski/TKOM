@@ -664,4 +664,28 @@ public class LexerImplTest {
         assertEquals(9, token.getPosition().getColumn());
         assertEquals(1, token.getPosition().getRow());
     }
+
+    @Test
+    public void buildTooLargeIntNumber() throws FileNotFoundException {
+        BufferedReader reader = new BufferedReader(new StringReader("981234981234981234981234981234981234"));
+        ErrorHandler errorHandler = new ErrorHandler();
+        Source source = new Source(reader, errorHandler);
+        Lexer lexer = new LexerImpl(source, errorHandler);
+        Token token = lexer.next();
+        assertEquals(TokenType.UKNKOWN, token.getTokenType());
+        assertEquals(1, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+    }
+
+    @Test
+    public void buildTooLargeDoubleNumber() throws FileNotFoundException {
+        BufferedReader reader = new BufferedReader(new StringReader("4738.987678397338393987"));
+        ErrorHandler errorHandler = new ErrorHandler();
+        Source source = new Source(reader, errorHandler);
+        Lexer lexer = new LexerImpl(source, errorHandler);
+        Token token = lexer.next();
+        assertEquals(TokenType.UKNKOWN, token.getTokenType());
+        assertEquals(1, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+    }
 }

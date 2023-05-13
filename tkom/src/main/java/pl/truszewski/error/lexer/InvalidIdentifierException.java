@@ -1,4 +1,4 @@
-package pl.truszewski.error;
+package pl.truszewski.error.lexer;
 
 public class InvalidIdentifierException extends Exception {
     public InvalidIdentifierException(String message) {

@@ -6,4 +6,8 @@ public class IntegerToken extends Token {
         super(TokenType.INT_NUMBER, position, value);
     }
 
+    @Override
+    public String toString() {
+        return "IntegerToken{}" + super.toString();
+    }
 }

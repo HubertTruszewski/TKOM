@@ -1,4 +1,4 @@
-package pl.truszewski.error;
+package pl.truszewski.error.lexer;
 
 public class TooLongIdentifierException extends Exception {
     public TooLongIdentifierException(String message) {

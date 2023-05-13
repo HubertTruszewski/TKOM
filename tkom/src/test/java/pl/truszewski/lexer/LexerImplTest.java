@@ -666,7 +666,7 @@ public class LexerImplTest {
     }
 
     @Test
-    public void buildTooLargeIntNumber() throws FileNotFoundException {
+    public void buildTooLargeIntNumber() {
         BufferedReader reader = new BufferedReader(new StringReader("981234981234981234981234981234981234"));
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
@@ -678,14 +678,54 @@ public class LexerImplTest {
     }
 
     @Test
-    public void buildTooLargeDoubleNumber() throws FileNotFoundException {
-        BufferedReader reader = new BufferedReader(new StringReader("4738.987678397338393987"));
+    public void buildIfStatementTokens() {
+        BufferedReader reader = new BufferedReader(new StringReader("if (h <= 40 || h > 20)"));
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        Token token = lexer.next();
-        assertEquals(TokenType.UKNKOWN, token.getTokenType());
+        Token token  = lexer.next();
+        assertEquals(TokenType.IF, token.getTokenType());
         assertEquals(1, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+        token = lexer.next();
+        assertEquals(TokenType.LEFT_ROUND_BRACKET, token.getTokenType());
+        assertEquals(4, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+        token = lexer.next();
+        assertEquals(TokenType.IDENTIFIER, token.getTokenType());
+        assertEquals(5, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+        assertEquals("h", token.getValue());
+        token = lexer.next();
+        assertEquals(TokenType.LESS_OR_EQUAL, token.getTokenType());
+        assertEquals(7, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+        token = lexer.next();
+        assertEquals(TokenType.INT_NUMBER, token.getTokenType());
+        assertEquals(10, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+        assertEquals(40, token.getValue());
+        token = lexer.next();
+        assertEquals(TokenType.OR, token.getTokenType());
+        assertEquals(14, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+        token = lexer.next();
+        assertEquals(TokenType.IDENTIFIER, token.getTokenType());
+        assertEquals(16, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+        assertEquals("h", token.getValue());
+        token = lexer.next();
+        assertEquals(TokenType.GREATER_SIGN, token.getTokenType());
+        assertEquals(18, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+        token = lexer.next();
+        assertEquals(TokenType.INT_NUMBER, token.getTokenType());
+        assertEquals(20, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+        assertEquals(20, token.getValue());
+        token = lexer.next();
+        assertEquals(TokenType.RIGHT_ROUND_BRACKET, token.getTokenType());
+        assertEquals(22, token.getPosition().getColumn());
         assertEquals(1, token.getPosition().getRow());
     }
 }

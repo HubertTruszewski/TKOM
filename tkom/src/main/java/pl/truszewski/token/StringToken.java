@@ -6,4 +6,8 @@ public class StringToken extends Token {
         super(tokenType, position, value);
     }
 
+    @Override
+    public String toString() {
+        return "StringToken{}" + super.toString();
+    }
 }

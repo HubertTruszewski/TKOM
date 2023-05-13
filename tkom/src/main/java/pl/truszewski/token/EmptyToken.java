@@ -6,4 +6,8 @@ public class EmptyToken extends Token {
         super(tokenType, position, null);
     }
 
+    @Override
+    public String toString() {
+        return "EmptyToken{}" + super.toString();
+    }
 }

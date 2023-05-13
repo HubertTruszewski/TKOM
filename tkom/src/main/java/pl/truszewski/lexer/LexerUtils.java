@@ -9,6 +9,7 @@ public class LexerUtils {
                         Map.entry("return", TokenType.RETURN),
                         Map.entry("while", TokenType.WHILE),
                         Map.entry("if", TokenType.IF),
+                        Map.entry("else", TokenType.ELSE),
                         Map.entry("as", TokenType.AS),
                         Map.entry("int", TokenType.INTEGER),
                         Map.entry("string", TokenType.STRING),

@@ -142,32 +142,33 @@ Składnia w formacie EBNF:
 
 ```
 program                    = {function_declaration};
-function_declaration       = type, identifier, "(", {type, identifier}, ")", code_block;
-code_block                 = "{", statement, "}";
+function_declaration       = type, identifier, "(", [function_parameters] ")", code_block;
+function_parameters        = parameter_declaration, {",", parameter_declaration};
+parameter_declaration      = type, identifier;
+code_block                 = "{", {statement}, "}";
 statement                  = conditional_statement
                            | variable_declaration
                            | variable_assignment
-                           | variable_decl_init
                            | return_statement
-                           | function_call;
-conditional_statement      = if_statement | while_loop;
+                           | expression, ";",
+conditional_statement      = if_statement | while_statement;
 if_statement               = "if (", expression, ")", code_block, ["else", code_block];
-while_loop                 = "while (", expression, ")", code_block;
-variable_declaration       = type, identifier;
-variable_decl_init         = type, variable_assignment;
+while_statement            = "while (", expression, ")", code_block;
+variable_declaration       = type, identifier, "=", expression ";";
 variable_assignment        = identifier, "=", expression, ";";
 return_statement           = "return", [expression], ";";
 expression                 = or_expression;
 or_expression              = and_expression, {or_operator, and_expression};
-and_expression             = coparison_expression, {and_operator, coparison_expression};
-coparison_expression       = addition_expression, {comparison_opearator, addition_expression};
+and_expression             = comparison_expression, {and_operator, comparison_expression};
+comparison_expression      = addition_expression, {comparison_opearator, addition_expression};
 addition_expression        = multiplication_expression, {addition_operator, multiplication_expression};
 multiplication_expression  = casting_expression, {multiplication_operator, casting_expression};
 casting_expression         = negation_expression, [casting_operator, type];
 negation_expression        = [negation_operator], access_expression;
-access_expression          = simple_expression, {access_operator, identifier, ["(", [simple_expression | identifier], ")"]};
-simple_expression          = number | string_literal | function_call | "(", expression, ")";
-function_call              = identifier, "(", {expression}, ")", ";", ;
+access_expression          = simple_expression, {access_operator, identifier_or_function_call};
+simple_expression          = number | string_literal | identifier_or_function_call | "(", expression, ")";
+identifier_or_function_call = identifier, [function_call_parameters];
+function_call_parameters   = "(", expression, {",", expression}, ")";
 type                       = "int"
                            | "string"
                            | "double"

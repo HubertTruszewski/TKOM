@@ -23,4 +23,8 @@ public abstract class Token {
         return value;
     }
 
+    @Override
+    public String toString() {
+        return "Token{" + "tokenType=" + tokenType + ", position=" + position + ", value=" + value + '}';
+    }
 }

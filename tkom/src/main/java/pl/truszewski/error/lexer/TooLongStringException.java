@@ -1,4 +1,4 @@
-package pl.truszewski.error;
+package pl.truszewski.error.lexer;
 
 public class TooLongStringException extends Exception {
     public TooLongStringException(String message) {

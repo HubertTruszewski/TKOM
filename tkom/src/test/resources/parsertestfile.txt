@@ -1,0 +1,18 @@
+int someFunction(int a, int b) {
+    int sum = a + b;
+    if (a > b) {
+        return a;
+    } else {
+        return sum;
+    }
+}
+
+
+void main() {
+    int a = 5;
+    int x = someFunction(2, 3) - 5;
+    while(a > 3) {
+        a = a - 1;
+    }
+    return;
+}

@@ -148,14 +148,13 @@ parameter_declaration      = type, identifier;
 code_block                 = "{", {statement}, "}";
 statement                  = conditional_statement
                            | variable_declaration
-                           | variable_assignment
                            | return_statement
-                           | expression, ";",
+                           | variable_assignment_or_expression;
 conditional_statement      = if_statement | while_statement;
 if_statement               = "if (", expression, ")", code_block, ["else", code_block];
 while_statement            = "while (", expression, ")", code_block;
 variable_declaration       = type, identifier, "=", expression ";";
-variable_assignment        = identifier, "=", expression, ";";
+variable_assignment_or_expression = [identifier, "="], expression, ";";
 return_statement           = "return", [expression], ";";
 expression                 = or_expression;
 or_expression              = and_expression, {or_operator, and_expression};
@@ -164,7 +163,7 @@ comparison_expression      = addition_expression, {comparison_opearator, additio
 addition_expression        = multiplication_expression, {addition_operator, multiplication_expression};
 multiplication_expression  = casting_expression, {multiplication_operator, casting_expression};
 casting_expression         = negation_expression, [casting_operator, type];
-negation_expression        = [negation_operator], access_expression;
+negation_expression        = [negation_operator | minus_sign], access_expression;
 access_expression          = simple_expression, {access_operator, identifier_or_function_call};
 simple_expression          = number | string_literal | identifier_or_function_call | "(", expression, ")";
 identifier_or_function_call = identifier, [function_call_parameters];
@@ -186,13 +185,13 @@ string_element             = letter | escape_character | digit | special_charact
 letter                     = "A" | "B" | ... | "Z" | "a" | "b" | ... | "z";
 escape_character           = "\";
 special_character          = " " | "." | "," | "@" | "!" | "#" | ...
-number                     = ["-"], (int_number | float_number);
+number                     = int_number | float_number;
 float_number               = int_number, ".", int_number;
 int_number                 = "0" | (digit_non_zero, {digit});
 digit                      = "0" | digit;
 digit_non_zero             = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" |;
 
-addition_operator          = "+" | "-";
+addition_operator          = "+" | minus_sign;
 multiplication_operator    = "*" | "/";
 negation_operator          = "!";
 access_operator            = ".";
@@ -200,5 +199,6 @@ comparison_operator        = "==", "!=", ">", "<", ">=", "<=";
 and_operator               = "&&";
 or_operator                = "||";
 casting_operator           = "as";
+minus_sign                 = "-";
 
 ```

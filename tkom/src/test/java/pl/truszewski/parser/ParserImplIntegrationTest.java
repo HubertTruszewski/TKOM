@@ -144,7 +144,7 @@ public class ParserImplIntegrationTest {
                         new AddExpression(new IntNumber(4),
                                 new AddExpression(new IntNumber(6), new DivideExpression(new IntNumber(5), new IntNumber(1))))),
                 sumBlock.statements().get(1));
-        assertEquals(new DeclarationStatement(ValueType.INT, "z", new IntNumber(-4)), sumBlock.statements().get(2));
+        assertEquals(new DeclarationStatement(ValueType.INT, "z", new NegationExpression(new IntNumber(4))), sumBlock.statements().get(2));
         assertEquals(new DeclarationStatement(ValueType.BOOL,
                 "y",
                 new NegationExpression(new IdentifierExpression("xyz"))), sumBlock.statements().get(3));
@@ -164,7 +164,7 @@ public class ParserImplIntegrationTest {
         assertEquals(new DeclarationStatement(ValueType.INT,
                 "h",
                 new FunctionCall("sum", List.of(new IntNumber(3), new IntNumber(4)))), mainBlock.statements().get(1));
-        assertEquals(new DeclarationStatement(ValueType.DOUBLE, "p", new DoubleNumber(-5.45)),
+        assertEquals(new DeclarationStatement(ValueType.DOUBLE, "p", new NegationExpression(new DoubleNumber(5.45))),
                 mainBlock.statements().get(2));
         Block whileBlock = new Block(List.of(new AssignmentStatement("h",
                         new AddExpression(new IdentifierExpression("h"),

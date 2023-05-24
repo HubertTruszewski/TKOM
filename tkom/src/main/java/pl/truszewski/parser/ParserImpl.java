@@ -7,6 +7,7 @@ import java.util.Map;
 
 import lombok.SneakyThrows;
 import pl.truszewski.ErrorHandler;
+import pl.truszewski.error.parser.CannotAssignValueToExpressionError;
 import pl.truszewski.error.parser.DuplicatedFunctionNameError;
 import pl.truszewski.error.parser.DuplicatedParameterError;
 import pl.truszewski.error.parser.MissingCharacterError;
@@ -185,9 +186,8 @@ public class ParserImpl implements Parser {
 
     /* statement = conditional_statement
                    | variable_declaration
-                   | variable_assignment
                    | return_statement
-                   | expression, ";",
+                   | variable_assignment_or_expression;
      */
     private Statement parseStatement() {
         Statement statement = parseConditionalStatement();
@@ -198,21 +198,11 @@ public class ParserImpl implements Parser {
         if (statement != null) {
             return statement;
         }
-        statement = parseAssignmentStatement();
-        if (statement != null) {
-            return statement;
-        }
         statement = parseReturnStatement();
         if (statement != null) {
             return statement;
         }
-        statement = parseExpression();
-        if (statement != null && !consumeIf(TokenType.SEMICOLON)) {
-            errorHandler.handleParserError(new MissingCharacterError("Missing character ;",
-                    ";",
-                    new Position(currentToken.getPosition())));
-        }
-        return statement;
+        return parseAssignmentStatementOrExpression();
     }
 
     // conditional_statement = if_statement | while_loop;
@@ -372,9 +362,9 @@ public class ParserImpl implements Parser {
         return new CastingExpression(expression, mapTokenToValueType(tokenType));
     }
 
-    // negation_expression = [negation_operator], access_expression;
+    // negation_expression = [negation_operator | minus_sign], access_expression;;
     private Expression parseNegationExpression() {
-        boolean negated = consumeIf(TokenType.EXCLAMATION_MARK);
+        boolean negated = consumeIf(TokenType.EXCLAMATION_MARK) || consumeIf(TokenType.MINUS_SIGN);
         Expression expression = parseAccessExpression();
         return negated ? new NegationExpression(expression) : expression;
     }
@@ -429,18 +419,17 @@ public class ParserImpl implements Parser {
         return expression;
     }
 
-    // number = ["-"], (int_number | float_number);
+    // number = int_number | float_number;
     private Expression parseNumber() {
-        boolean negative = consumeIf(TokenType.MINUS_SIGN);
         if (isTokenType(TokenType.INT_NUMBER)) {
             Integer value = (Integer) currentToken.getValue();
             consumeCurrent();
-            return negative ? new IntNumber(-(value)) : new IntNumber(value);
+            return new IntNumber(value);
         }
         if (isTokenType(TokenType.DOUBLE_NUMBER)) {
             Double value = (Double) currentToken.getValue();
             consumeCurrent();
-            return negative ? new DoubleNumber(-(value)) : new DoubleNumber(value);
+            return new DoubleNumber(value);
         }
         return null;
     }
@@ -546,25 +535,35 @@ public class ParserImpl implements Parser {
         return new DeclarationStatement(tokenValueType, variableName, expression);
     }
 
-    // variable_assignment = identifier, "=", expression, ";";
-    private AssignmentStatement parseAssignmentStatement() {
-        if (!isTokenType(TokenType.IDENTIFIER)) {
+    // variable_assignment = [identifier, "="], expression, ";";
+    private Statement parseAssignmentStatementOrExpression() {
+        Expression leftExpression = parseExpression();
+        if (leftExpression == null) {
             return null;
         }
-        String identifierName = (String) currentToken.getValue();
-        consumeCurrent();
+
         if (!consumeIf(TokenType.EQUAL_SIGN)) {
-            handleCriticalError(new MissingCharacterError("Missing character =",
-                    "=",
+            if (consumeIf(TokenType.SEMICOLON)) {
+                return leftExpression;
+            }
+            errorHandler.handleParserError(new MissingCharacterError("Missing character ;",
+                    ";",
                     new Position(currentToken.getPosition())));
         }
-        Expression expression = parseExpression();
-        if (!consumeIf(TokenType.SEMICOLON)) {
-            errorHandler.handleParserError(new MissingCharacterError("Missing character )",
-                    ")",
-                    new Position(currentToken.getPosition())));
+
+        if (leftExpression instanceof IdentifierExpression identifierExpression) {
+            Expression rightExpression = parseExpression();
+            if (!consumeIf(TokenType.SEMICOLON)) {
+                errorHandler.handleParserError(new MissingCharacterError("Missing character ;",
+                        ";",
+                        new Position(currentToken.getPosition())));
+            }
+            return new AssignmentStatement(identifierExpression.identifierName(), rightExpression);
         }
-        return new AssignmentStatement(identifierName, expression);
+        handleCriticalError(new CannotAssignValueToExpressionError("Cannot assign value to expression",
+                currentToken.getPosition()));
+        return null;
+
     }
 
     // return_statement = "return", [expression], ";";

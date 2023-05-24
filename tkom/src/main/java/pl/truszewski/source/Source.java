@@ -5,8 +5,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Objects;
 
+import lombok.SneakyThrows;
 import pl.truszewski.ErrorHandler;
-import pl.truszewski.error.InvalidNewLineCharacterException;
+import pl.truszewski.error.lexer.InvalidNewLineCharacterException;
 import pl.truszewski.token.Position;
 
 public class Source {
@@ -20,10 +21,12 @@ public class Source {
     private boolean noNextChar;
     private ErrorHandler errorHandler;
 
+    @SneakyThrows
     public Source(Reader reader, ErrorHandler errorHandler) {
         this.position = new Position();
         this.reader = new BufferedReader(reader);
         this.errorHandler = errorHandler;
+        this.nextChar = readCharacter();
     }
 
     public String getCharacter() {
@@ -71,6 +74,10 @@ public class Source {
             errorHandler.handleError(e, position);
         }
 
+    }
+
+    public String peekNextCharacter() {
+        return this.nextChar;
     }
 
     public Position getPosition() {

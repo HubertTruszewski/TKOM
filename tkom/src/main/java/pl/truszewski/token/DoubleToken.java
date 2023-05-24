@@ -6,4 +6,8 @@ public class DoubleToken extends Token {
         super(TokenType.DOUBLE_NUMBER, position, value);
     }
 
+    @Override
+    public String toString() {
+        return "DoubleToken{}" + super.toString();
+    }
 }

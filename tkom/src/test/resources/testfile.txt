@@ -1,0 +1,27 @@
+int sum(int x, int y) {
+    string text = "abcdef";
+    int x = 4 + (6 + 5 / 1);
+    int z = -4;
+    bool y = !xyz;
+    return x + y + 5;
+}
+
+void main(int a, int b) {
+    int d = 4 + 5;
+    int h = sum(3, 4);
+    double p = -5.45;
+
+    while (d >= 1) {
+        h = h + sum(d, 3);
+        d = d - 1;
+    }
+
+    if (h <= 40 && h > 20 || h != 10) {
+        p = 4.5;
+    } else {
+        p = 10.125;
+    }
+    d = 5 * (2 + 10 / 2);
+    int r = sphere.r;
+    int volume = sphere.volume();
+}

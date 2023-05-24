@@ -1,4 +1,4 @@
-package pl.truszewski.error;
+package pl.truszewski.error.lexer;
 
 public class InvalidNewLineCharacterException extends Exception {
     public InvalidNewLineCharacterException(String message) {

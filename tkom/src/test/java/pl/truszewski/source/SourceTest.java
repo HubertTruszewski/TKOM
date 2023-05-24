@@ -1,6 +1,9 @@
 package pl.truszewski.source;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.StringReader;
 
@@ -16,13 +19,13 @@ public class SourceTest {
         ErrorHandler errorHandler = new ErrorHandler();
         String input = "abc";
         Source source = new Source(new StringReader(input), errorHandler);
-        assertEquals(source.getCharacter(), null);
+        assertNull(source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "a");
+        assertEquals("a", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "b");
+        assertEquals("b", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "c");
+        assertEquals("c", source.getCharacter());
     }
 
     @Test
@@ -30,13 +33,13 @@ public class SourceTest {
         ErrorHandler errorHandler = new ErrorHandler();
         String input = "a\nd";
         Source source = new Source(new StringReader(input), errorHandler);
-        assertEquals(source.getCharacter(), null);
+        assertNull(source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "a");
+        assertEquals("a", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "\n");
+        assertEquals("\n", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "d");
+        assertEquals("d", source.getCharacter());
     }
 
     @Test
@@ -44,21 +47,21 @@ public class SourceTest {
         ErrorHandler errorHandler = new ErrorHandler();
         String input = "a\n\rf\n\re";
         Source source = new Source(new StringReader(input), errorHandler);
-        assertEquals(source.getCharacter(), null);
+        assertNull(source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "a");
+        assertEquals("a", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "\n");
+        assertEquals("\n", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "\r");
+        assertEquals("\r", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "f");
+        assertEquals("f", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "\n");
+        assertEquals("\n", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "\r");
+        assertEquals("\r", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "e");
+        assertEquals("e", source.getCharacter());
     }
 
     @Test
@@ -66,21 +69,21 @@ public class SourceTest {
         ErrorHandler errorHandler = new ErrorHandler();
         String input = "a\r\nf\r\ne";
         Source source = new Source(new StringReader(input), errorHandler);
-        assertEquals(source.getCharacter(), null);
+        assertNull(source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "a");
+        assertEquals("a", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "\r");
+        assertEquals("\r", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "\n");
+        assertEquals("\n", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "f");
+        assertEquals("f", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "\r");
+        assertEquals("\r", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "\n");
+        assertEquals("\n", source.getCharacter());
         source.nextCharacter();
-        assertEquals(source.getCharacter(), "e");
+        assertEquals("e", source.getCharacter());
     }
 
     @Test
@@ -89,14 +92,14 @@ public class SourceTest {
         String input = "ab";
         Source source = new Source(new StringReader(input), errorHandler);
         Position p = source.getPosition();
-        assertEquals(p.getColumn(), 0);
-        assertEquals(p.getRow(), 1);
+        assertEquals(0, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 1);
+        assertEquals(1, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 2);
-        assertEquals(p.getRow(), 1);
+        assertEquals(2, p.getColumn());
+        assertEquals(1, p.getRow());
     }
 
     @Test
@@ -105,17 +108,17 @@ public class SourceTest {
         String input = "a\nbc";
         Source source = new Source(new StringReader(input), errorHandler);
         Position p = source.getPosition();
-        assertEquals(p.getColumn(), 0);
-        assertEquals(p.getRow(), 1);
+        assertEquals(0, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 1);
+        assertEquals(1, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 2);
-        assertEquals(p.getRow(), 1);
+        assertEquals(2, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 2);
+        assertEquals(1, p.getColumn());
+        assertEquals(2, p.getRow());
     }
 
     @Test
@@ -124,20 +127,20 @@ public class SourceTest {
         String input = "a\n\rb";
         Source source = new Source(new StringReader(input), errorHandler);
         Position p = source.getPosition();
-        assertEquals(p.getColumn(), 0);
-        assertEquals(p.getRow(), 1);
+        assertEquals(0, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 1);
+        assertEquals(1, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 2);
-        assertEquals(p.getRow(), 1);
+        assertEquals(2, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 3);
-        assertEquals(p.getRow(), 1);
+        assertEquals(3, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 2);
+        assertEquals(1, p.getColumn());
+        assertEquals(2, p.getRow());
     }
 
     @Test
@@ -146,29 +149,29 @@ public class SourceTest {
         String input = "a\n\n\nb\nc";
         Source source = new Source(new StringReader(input), errorHandler);
         Position p = source.getPosition();
-        assertEquals(p.getColumn(), 0);
-        assertEquals(p.getRow(), 1);
+        assertEquals(0, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 1);
+        assertEquals(1, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 2);
-        assertEquals(p.getRow(), 1);
+        assertEquals(2, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 2);
+        assertEquals(1, p.getColumn());
+        assertEquals(2, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 3);
+        assertEquals(1, p.getColumn());
+        assertEquals(3, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 4);
+        assertEquals(1, p.getColumn());
+        assertEquals(4, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 2);
-        assertEquals(p.getRow(), 4);
+        assertEquals(2, p.getColumn());
+        assertEquals(4, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 5);
+        assertEquals(1, p.getColumn());
+        assertEquals(5, p.getRow());
     }
 
     @Test
@@ -177,35 +180,35 @@ public class SourceTest {
         String input = "a\n\r\n\rb\n\rc";
         Source source = new Source(new StringReader(input), errorHandler);
         Position p = source.getPosition();
-        assertEquals(p.getColumn(), 0);
-        assertEquals(p.getRow(), 1);
+        assertEquals(0, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 1);
+        assertEquals(1, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 2);
-        assertEquals(p.getRow(), 1);
+        assertEquals(2, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 3);
-        assertEquals(p.getRow(), 1);
+        assertEquals(3, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 2);
+        assertEquals(1, p.getColumn());
+        assertEquals(2, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 2);
-        assertEquals(p.getRow(), 2);
+        assertEquals(2, p.getColumn());
+        assertEquals(2, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 3);
+        assertEquals(1, p.getColumn());
+        assertEquals(3, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 2);
-        assertEquals(p.getRow(), 3);
+        assertEquals(2, p.getColumn());
+        assertEquals(3, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 3);
-        assertEquals(p.getRow(), 3);
+        assertEquals(3, p.getColumn());
+        assertEquals(3, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 4);
+        assertEquals(1, p.getColumn());
+        assertEquals(4, p.getRow());
     }
 
     @Test
@@ -214,35 +217,49 @@ public class SourceTest {
         String input = "a\r\n\r\nb\r\nc";
         Source source = new Source(new StringReader(input), errorHandler);
         Position p = source.getPosition();
-        assertEquals(p.getColumn(), 0);
-        assertEquals(p.getRow(), 1);
+        assertEquals(0, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 1);
+        assertEquals(1, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 2);
-        assertEquals(p.getRow(), 1);
+        assertEquals(2, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 3);
-        assertEquals(p.getRow(), 1);
+        assertEquals(3, p.getColumn());
+        assertEquals(1, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 2);
+        assertEquals(1, p.getColumn());
+        assertEquals(2, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 2);
-        assertEquals(p.getRow(), 2);
+        assertEquals(2, p.getColumn());
+        assertEquals(2, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 3);
+        assertEquals(1, p.getColumn());
+        assertEquals(3, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 2);
-        assertEquals(p.getRow(), 3);
+        assertEquals(2, p.getColumn());
+        assertEquals(3, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 3);
-        assertEquals(p.getRow(), 3);
+        assertEquals(3, p.getColumn());
+        assertEquals(3, p.getRow());
         source.nextCharacter();
-        assertEquals(p.getColumn(), 1);
-        assertEquals(p.getRow(), 4);
+        assertEquals(1, p.getColumn());
+        assertEquals(4, p.getRow());
+    }
+
+    @Test
+    public void testPeekNextCharacter() {
+        ErrorHandler errorHandler = new ErrorHandler();
+        String input = "abc";
+        Source source = new Source(new StringReader(input), errorHandler);
+        assertEquals("a", source.peekNextCharacter());
+        source.nextCharacter();
+        assertEquals("b", source.peekNextCharacter());
+        source.nextCharacter();
+        assertEquals("c", source.peekNextCharacter());
+        source.nextCharacter();
+        assertNull(source.peekNextCharacter());
     }
 
     @Test
@@ -254,7 +271,7 @@ public class SourceTest {
         source.nextCharacter();
         source.nextCharacter();
         source.nextCharacter();
-        assertEquals(source.isEOF(), true);
+        assertTrue(source.isEOF());
     }
 
     @Test
@@ -266,7 +283,7 @@ public class SourceTest {
         source.nextCharacter();
         source.nextCharacter();
         source.nextCharacter();
-        assertEquals(source.isEOF(), false);
+        assertFalse(source.isEOF());
     }
 
 }

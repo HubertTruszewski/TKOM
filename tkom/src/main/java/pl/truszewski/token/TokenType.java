@@ -31,6 +31,7 @@ public enum TokenType {
     RETURN("return keyword", "return"),
     WHILE("while loop keyword", "while"),
     IF("if instruction keyword", "if"),
+    ELSE("if instruction else keyword", "else"),
     AS("As casting operator", "as"),
 
     INTEGER("Integer type keyword", "int"),

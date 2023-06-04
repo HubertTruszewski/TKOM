@@ -1,5 +1,6 @@
 package pl.truszewski.interpreter;
 
+import java.io.PrintStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -101,7 +102,12 @@ public class InterpreterImpl implements Interpreter, Visitor {
             ValueType.CONE);
     private final Map<String, FunctionDefinition> functionDefinitions = new HashMap<>(InterpreterUtils.BUILTIN_FUNCTIONS);
     private final Deque<FunctionCallContext> functionCallContexts = new ArrayDeque<>();
+    private final PrintStream out;
     private Result result = Result.empty();
+
+    public InterpreterImpl(final PrintStream stream) {
+        this.out = stream;
+    }
 
     @Override
     public void execute(final Program program) {
@@ -544,7 +550,7 @@ public class InterpreterImpl implements Interpreter, Visitor {
         FunctionCallContext context = functionCallContexts.getLast();
         Variable variable = context.findVariable("value")
                 .orElseThrow(() -> new BadArgumentsListSizeError("Not provided argument"));
-        System.out.println(variable.value().value().toString());
+        out.println(variable.value().value().toString());
     }
 
     @Override
@@ -720,7 +726,9 @@ public class InterpreterImpl implements Interpreter, Visitor {
                 .orElseThrow(() -> new BadArgumentsListSizeError("Not provided argument l"))
                 .value()
                 .value();
-        result = new Result(true, true, new Value(ValueType.DOUBLE, Math.PI * Math.pow(r, 2) * l / 3));
+        result = new Result(true,
+                true,
+                new Value(ValueType.DOUBLE, Math.PI * Math.pow(r, 2) * Math.sqrt(Math.pow(l, 2) - Math.pow(r, 2)) / 3));
     }
 
     @Override

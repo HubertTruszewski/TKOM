@@ -26,7 +26,7 @@ public class App {
             Lexer commentLexerFilter = new CommentLexerFilter(lexer);
             Parser parser = new ParserImpl(commentLexerFilter, errorHandler);
             Program program = parser.parse();
-            Interpreter interpreter = new InterpreterImpl();
+            Interpreter interpreter = new InterpreterImpl(System.out);
             interpreter.execute(program);
         } catch (Exception e) {
             log.error(e.getMessage());

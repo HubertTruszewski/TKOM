@@ -44,7 +44,8 @@ public enum TokenType {
     SPHERE("Sphere type keyword", "Sphere"),
     CUBOID("Cuboid type keyword", "Cuboid"),
     PYRAMID("Pyramid type keyword", "Pyramid"),
-    SCREEN("Screen type keyword", "Screen"),
+    LIST("List type keyword", "List"),
+    ITERATOR("Iterator type keyword", "Iterator"),
 
     IDENTIFIER("Identifier", null),
     TEXT("Text", null),

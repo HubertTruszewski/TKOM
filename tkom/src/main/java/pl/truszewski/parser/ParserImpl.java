@@ -573,8 +573,8 @@ public class ParserImpl implements Parser {
         }
         Expression expression = parseExpression();
         if (!consumeIf(TokenType.SEMICOLON)) {
-            errorHandler.handleParserError(new MissingCharacterError("Missing character )",
-                    ")",
+            errorHandler.handleParserError(new MissingCharacterError("Missing character ;",
+                    ";",
                     new Position(currentToken.getPosition())));
         }
         return new ReturnStatement(expression);
@@ -604,7 +604,7 @@ public class ParserImpl implements Parser {
         return isTokenType(TokenType.INTEGER) || isTokenType(TokenType.DOUBLE) || isTokenType(TokenType.STRING)
                 || isTokenType(TokenType.VOID) || isTokenType(TokenType.BOOL) || isTokenType(TokenType.CONE)
                 || isTokenType(TokenType.CYLINDER) || isTokenType(TokenType.SPHERE) || isTokenType(TokenType.CUBOID)
-                || isTokenType(TokenType.PYRAMID) || isTokenType(TokenType.SCREEN);
+                || isTokenType(TokenType.PYRAMID) || isTokenType(TokenType.LIST) || isTokenType(TokenType.ITERATOR);
     }
 
     private boolean isRelationOperator() {
@@ -632,8 +632,9 @@ public class ParserImpl implements Parser {
             case CONE -> ValueType.CONE;
             case PYRAMID -> ValueType.PYRAMID;
             case SPHERE -> ValueType.SPHERE;
-            case SCREEN -> ValueType.SCREEN;
             case CUBOID -> ValueType.CUBOID;
+            case LIST -> ValueType.LIST;
+            case ITERATOR -> ValueType.ITERATOR;
             default -> null;
         };
     }

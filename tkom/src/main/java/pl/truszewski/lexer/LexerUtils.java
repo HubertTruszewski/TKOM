@@ -21,7 +21,8 @@ public class LexerUtils {
                         Map.entry("Sphere", TokenType.SPHERE),
                         Map.entry("Cuboid", TokenType.CUBOID),
                         Map.entry("Pyramid", TokenType.PYRAMID),
-                        Map.entry("Screen", TokenType.SCREEN));
+                        Map.entry("List", TokenType.LIST),
+                        Map.entry("Iterator", TokenType.ITERATOR));
 
         public static final Map<String, TokenType> singleCharacterTokens = Map.ofEntries(
                         Map.entry("(", TokenType.LEFT_ROUND_BRACKET),

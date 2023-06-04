@@ -1,6 +1,5 @@
 package pl.truszewski.visitor;
 
-import lombok.extern.slf4j.Slf4j;
 import pl.truszewski.interpreter.objects.PrintFunction;
 import pl.truszewski.interpreter.objects.ShowFiguresFunction;
 import pl.truszewski.interpreter.objects.cone.ConeBaseSurfaceFunction;
@@ -64,7 +63,6 @@ import pl.truszewski.programstructure.statements.ReturnStatement;
 import pl.truszewski.programstructure.statements.Statement;
 import pl.truszewski.programstructure.statements.WhileStatement;
 
-@Slf4j
 public class PrinterVisitor implements Visitor {
     private static final int INDENTATION_LEVEL = 1;
     private static final String INDENTATION_CHARACTER = "*";
@@ -388,8 +386,7 @@ public class PrinterVisitor implements Visitor {
     }
 
     @Override
-    public void visit(
-            final ConeTotalSurfaceFunction cuboidTotalSurfaceFunction) {
+    public void visit(final ConeTotalSurfaceFunction cuboidTotalSurfaceFunction) {
 
     }
 
@@ -492,6 +489,6 @@ public class PrinterVisitor implements Visitor {
     }
 
     private void print(String text) {
-        log.info(INDENTATION_CHARACTER.repeat(currentIndentation) + text);
+        System.out.println(INDENTATION_CHARACTER.repeat(currentIndentation) + text);
     }
 }

@@ -11,7 +11,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javafx.application.Application;
-import lombok.extern.slf4j.Slf4j;
 import pl.truszewski.Window;
 import pl.truszewski.error.interpreter.BadArgumentsListSizeError;
 import pl.truszewski.error.interpreter.BadValueTypeError;
@@ -92,7 +91,6 @@ import pl.truszewski.programstructure.statements.Statement;
 import pl.truszewski.programstructure.statements.WhileStatement;
 import pl.truszewski.visitor.Visitor;
 
-@Slf4j
 public class InterpreterImpl implements Interpreter, Visitor {
     private static final String MAIN_FUNCTION_NAME = "main";
     private static final List<ValueType> FIGURE_VALUE_TYPES = List.of(ValueType.CUBOID,
@@ -111,11 +109,7 @@ public class InterpreterImpl implements Interpreter, Visitor {
 
     @Override
     public void execute(final Program program) {
-        try {
-            visit(program);
-        } catch (RuntimeException e) {
-            log.error(e.getMessage());
-        }
+        visit(program);
     }
 
     @Override

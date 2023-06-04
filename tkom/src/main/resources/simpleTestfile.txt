@@ -4,5 +4,9 @@ string pow(int x) {
 
 void main() {
     Sphere c = newSphere(15.0);
-    print(c.volume() as string);
+    List l = newList();
+    l.add(c);
+    Cuboid d = newCuboid(30.0, 20.0, 50.0);
+    l.add(d);
+    showFigures(l);
 }

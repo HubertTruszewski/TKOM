@@ -19,7 +19,6 @@ public enum TokenType {
     ASTERISK_SIGN("Asterisk sign", "*"),
     SLASH("Slash", "/"),
     BACKSLASH("Backslash", "\\"),
-
     GREATER_OR_EQUAL("Greater or equal", ">="),
     LESS_OR_EQUAL("Less or equal", "<="),
     EQUALS("Equals", "=="),
@@ -27,13 +26,11 @@ public enum TokenType {
     AND("And", "&&"),
     OR("Or", "||"),
     COMMENT("Comment", "//"),
-
     RETURN("return keyword", "return"),
     WHILE("while loop keyword", "while"),
     IF("if instruction keyword", "if"),
     ELSE("if instruction else keyword", "else"),
     AS("As casting operator", "as"),
-
     INTEGER("Integer type keyword", "int"),
     STRING("String type keyword", "string"),
     DOUBLE("Double type keyword", "double"),
@@ -46,15 +43,11 @@ public enum TokenType {
     PYRAMID("Pyramid type keyword", "Pyramid"),
     LIST("List type keyword", "List"),
     ITERATOR("Iterator type keyword", "Iterator"),
-
     IDENTIFIER("Identifier", null),
     TEXT("Text", null),
-
     INT_NUMBER("Int number", null),
     DOUBLE_NUMBER("Double number", null),
-
     UKNKOWN("Unknown token", null),
-
     EOF("End of file", null);
 
     private final String name;

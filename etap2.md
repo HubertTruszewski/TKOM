@@ -178,7 +178,8 @@ type                       = "int"
                            | "Sphere"
                            | "Cuboid"
                            | "Pyramid"
-                           | "Screen";
+                           | "List"
+                           | "Iterator";
 identifier                 = letter, {letter | digit};
 string_literal             = '"', {string_element}, '"';
 string_element             = letter | escape_character | digit | special_character;

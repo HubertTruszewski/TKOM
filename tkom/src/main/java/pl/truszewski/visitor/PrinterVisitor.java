@@ -1,6 +1,36 @@
 package pl.truszewski.visitor;
 
-import lombok.extern.slf4j.Slf4j;
+import pl.truszewski.interpreter.objects.PrintFunction;
+import pl.truszewski.interpreter.objects.ShowFiguresFunction;
+import pl.truszewski.interpreter.objects.cone.ConeBaseSurfaceFunction;
+import pl.truszewski.interpreter.objects.cone.ConeFunction;
+import pl.truszewski.interpreter.objects.cone.ConeLateralSurfaceFunction;
+import pl.truszewski.interpreter.objects.cone.ConeTotalSurfaceFunction;
+import pl.truszewski.interpreter.objects.cone.ConeVolumeFunction;
+import pl.truszewski.interpreter.objects.cuboid.CuboidBaseSurfaceFunction;
+import pl.truszewski.interpreter.objects.cuboid.CuboidFunction;
+import pl.truszewski.interpreter.objects.cuboid.CuboidLateralSurfaceFunction;
+import pl.truszewski.interpreter.objects.cuboid.CuboidTotalSurfaceFunction;
+import pl.truszewski.interpreter.objects.cuboid.CuboidVolumeFunction;
+import pl.truszewski.interpreter.objects.cylinder.CylinderBaseSurfaceFunction;
+import pl.truszewski.interpreter.objects.cylinder.CylinderFunction;
+import pl.truszewski.interpreter.objects.cylinder.CylinderLateralSurfaceFunction;
+import pl.truszewski.interpreter.objects.cylinder.CylinderTotalSurfaceFunction;
+import pl.truszewski.interpreter.objects.cylinder.CylinderVolumeFunction;
+import pl.truszewski.interpreter.objects.iterator.IteratorHasNextFunction;
+import pl.truszewski.interpreter.objects.iterator.IteratorNextFunction;
+import pl.truszewski.interpreter.objects.list.AddListFunction;
+import pl.truszewski.interpreter.objects.list.ListFunction;
+import pl.truszewski.interpreter.objects.list.ListIteratorFunction;
+import pl.truszewski.interpreter.objects.pyramid.PyramidBaseSurfaceFunction;
+import pl.truszewski.interpreter.objects.pyramid.PyramidFunction;
+import pl.truszewski.interpreter.objects.pyramid.PyramidLateralSurfaceFunction;
+import pl.truszewski.interpreter.objects.pyramid.PyramidTotalSurfaceFunction;
+import pl.truszewski.interpreter.objects.pyramid.PyramidVolumeFunction;
+import pl.truszewski.interpreter.objects.sphere.SphereDiameterFunction;
+import pl.truszewski.interpreter.objects.sphere.SphereFunction;
+import pl.truszewski.interpreter.objects.sphere.SphereTotalSurfaceFunction;
+import pl.truszewski.interpreter.objects.sphere.SphereVolumeFunction;
 import pl.truszewski.programstructure.basic.Block;
 import pl.truszewski.programstructure.basic.FunctionDefinition;
 import pl.truszewski.programstructure.basic.Parameter;
@@ -33,7 +63,6 @@ import pl.truszewski.programstructure.statements.ReturnStatement;
 import pl.truszewski.programstructure.statements.Statement;
 import pl.truszewski.programstructure.statements.WhileStatement;
 
-@Slf4j
 public class PrinterVisitor implements Visitor {
     private static final int INDENTATION_LEVEL = 1;
     private static final String INDENTATION_CHARACTER = "*";
@@ -296,6 +325,161 @@ public class PrinterVisitor implements Visitor {
         decreaseIndentation();
     }
 
+    @Override
+    public void visit(final PrintFunction printFunction) {
+
+    }
+
+    @Override
+    public void visit(final CuboidFunction cuboidFunction) {
+
+    }
+
+    @Override
+    public void visit(final CuboidVolumeFunction cuboidVolumeFunction) {
+
+    }
+
+    @Override
+    public void visit(final CuboidBaseSurfaceFunction cuboidBaseSurfaceFunction) {
+
+    }
+
+    @Override
+    public void visit(final CuboidLateralSurfaceFunction cuboidLateralSurfaceFunction) {
+
+    }
+
+    @Override
+    public void visit(final CuboidTotalSurfaceFunction cuboidTotalSurfaceFunction) {
+
+    }
+
+    @Override
+    public void visit(final PyramidBaseSurfaceFunction pyramidBaseSurfaceFunction) {
+
+    }
+
+    @Override
+    public void visit(final PyramidFunction pyramidFunction) {
+
+    }
+
+    @Override
+    public void visit(final PyramidLateralSurfaceFunction pyramidLateralSurfaceFunction) {
+
+    }
+
+    @Override
+    public void visit(final PyramidTotalSurfaceFunction pyramidTotalSurfaceFunction) {
+
+    }
+
+    @Override
+    public void visit(final PyramidVolumeFunction pyramidVolumeFunction) {
+
+    }
+
+    @Override
+    public void visit(final ConeVolumeFunction cuboidVolumeFunction) {
+
+    }
+
+    @Override
+    public void visit(final ConeTotalSurfaceFunction cuboidTotalSurfaceFunction) {
+
+    }
+
+    @Override
+    public void visit(final ConeLateralSurfaceFunction coneLateralSurfaceFunction) {
+
+    }
+
+    @Override
+    public void visit(final ConeBaseSurfaceFunction coneBaseSurfaceFunction) {
+
+    }
+
+    @Override
+    public void visit(final ConeFunction coneFunction) {
+
+    }
+
+    @Override
+    public void visit(final CylinderTotalSurfaceFunction cylinderTotalSurfaceFunction) {
+
+    }
+
+    @Override
+    public void visit(final CylinderBaseSurfaceFunction cylinderBaseSurfaceFunction) {
+
+    }
+
+    @Override
+    public void visit(final CylinderFunction cylinderFunction) {
+
+    }
+
+    @Override
+    public void visit(final CylinderLateralSurfaceFunction cylinderLateralSurfaceFunction) {
+
+    }
+
+    @Override
+    public void visit(final CylinderVolumeFunction cylinderVolumeFunction) {
+
+    }
+
+    @Override
+    public void visit(final SphereTotalSurfaceFunction sphereTotalSurfaceFunction) {
+
+    }
+
+    @Override
+    public void visit(final SphereVolumeFunction sphereVolumeFunction) {
+
+    }
+
+    @Override
+    public void visit(final SphereFunction sphereFunction) {
+
+    }
+
+    @Override
+    public void visit(final SphereDiameterFunction sphereDiameterFunction) {
+
+    }
+
+    @Override
+    public void visit(final ListFunction listFunction) {
+
+    }
+
+    @Override
+    public void visit(final AddListFunction addListFunction) {
+
+    }
+
+    @Override
+    public void visit(final IteratorNextFunction iteratorNextFunction) {
+
+    }
+
+    @Override
+    public void visit(final ListIteratorFunction listIteratorFunction) {
+
+    }
+
+    @Override
+    public void visit(final IteratorHasNextFunction iteratorHasNextFunction) {
+
+    }
+
+    @Override
+    public void visit(final ShowFiguresFunction showFiguresFunction) {
+
+    }
+
     private void increaseIndentation() {
         currentIndentation += INDENTATION_LEVEL;
     }
@@ -305,6 +489,6 @@ public class PrinterVisitor implements Visitor {
     }
 
     private void print(String text) {
-        log.info(INDENTATION_CHARACTER.repeat(currentIndentation) + text);
+        System.out.println(INDENTATION_CHARACTER.repeat(currentIndentation) + text);
     }
 }

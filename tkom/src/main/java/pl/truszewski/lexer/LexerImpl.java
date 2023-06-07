@@ -129,17 +129,16 @@ public class LexerImpl implements Lexer {
                 this.currentToken = new EmptyToken(TokenType.UKNKOWN, position);
                 return true;
             }
+        } else {
+            nextCharacter();
         }
         if (this.character != null && this.character.equals(".")) {
             decimalDigitCounter = 0;
             nextCharacter();
-            Integer fraction = this.character.codePointAt(0) - '0';
-            if (fraction != 0) {
-                fraction = processIntNumber();
-                if (fraction == null) {
-                    this.currentToken = new EmptyToken(TokenType.UKNKOWN, position);
-                    return true;
-                }
+            Integer fraction = processIntNumber();
+            if (fraction == null) {
+                this.currentToken = new EmptyToken(TokenType.UKNKOWN, position);
+                return true;
             }
             this.currentToken = new DoubleToken(value + (fraction * Math.pow(10, -decimalDigitCounter)), position);
 

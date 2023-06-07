@@ -439,13 +439,25 @@ public class LexerImplTest {
     }
 
     @Test
-    public void buildScreenKeyword() {
-        BufferedReader reader = new BufferedReader(new StringReader("Screen s ="));
+    public void buildListKeyword() {
+        BufferedReader reader = new BufferedReader(new StringReader("List l ="));
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
         Token token = lexer.next();
-        assertEquals(TokenType.SCREEN, token.getTokenType());
+        assertEquals(TokenType.LIST, token.getTokenType());
+        assertEquals(1, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+    }
+
+    @Test
+    public void buildIteratorKeyword() {
+        BufferedReader reader = new BufferedReader(new StringReader("Iterator l ="));
+        ErrorHandler errorHandler = new ErrorHandler();
+        Source source = new Source(reader, errorHandler);
+        Lexer lexer = new LexerImpl(source, errorHandler);
+        Token token = lexer.next();
+        assertEquals(TokenType.ITERATOR, token.getTokenType());
         assertEquals(1, token.getPosition().getColumn());
         assertEquals(1, token.getPosition().getRow());
     }
@@ -472,6 +484,32 @@ public class LexerImplTest {
         Token token = lexer.next();
         assertEquals(TokenType.DOUBLE_NUMBER, token.getTokenType());
         assertEquals(45.98, token.getValue());
+        assertEquals(1, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+    }
+
+    @Test
+    public void buildDoubleWithZeroAfterDotNumber() {
+        BufferedReader reader = new BufferedReader(new StringReader("1.0"));
+        ErrorHandler errorHandler = new ErrorHandler();
+        Source source = new Source(reader, errorHandler);
+        Lexer lexer = new LexerImpl(source, errorHandler);
+        Token token = lexer.next();
+        assertEquals(TokenType.DOUBLE_NUMBER, token.getTokenType());
+        assertEquals(1.0, token.getValue());
+        assertEquals(1, token.getPosition().getColumn());
+        assertEquals(1, token.getPosition().getRow());
+    }
+
+    @Test
+    public void buildDoubleWithZeroAfterDotAndDigitNumber() {
+        BufferedReader reader = new BufferedReader(new StringReader("1.06"));
+        ErrorHandler errorHandler = new ErrorHandler();
+        Source source = new Source(reader, errorHandler);
+        Lexer lexer = new LexerImpl(source, errorHandler);
+        Token token = lexer.next();
+        assertEquals(TokenType.DOUBLE_NUMBER, token.getTokenType());
+        assertEquals(1.06, token.getValue());
         assertEquals(1, token.getPosition().getColumn());
         assertEquals(1, token.getPosition().getRow());
     }
@@ -683,7 +721,7 @@ public class LexerImplTest {
         ErrorHandler errorHandler = new ErrorHandler();
         Source source = new Source(reader, errorHandler);
         Lexer lexer = new LexerImpl(source, errorHandler);
-        Token token  = lexer.next();
+        Token token = lexer.next();
         assertEquals(TokenType.IF, token.getTokenType());
         assertEquals(1, token.getPosition().getColumn());
         assertEquals(1, token.getPosition().getRow());

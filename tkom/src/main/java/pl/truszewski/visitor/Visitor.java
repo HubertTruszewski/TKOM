@@ -1,5 +1,36 @@
 package pl.truszewski.visitor;
 
+import pl.truszewski.interpreter.objects.PrintFunction;
+import pl.truszewski.interpreter.objects.ShowFiguresFunction;
+import pl.truszewski.interpreter.objects.cone.ConeBaseSurfaceFunction;
+import pl.truszewski.interpreter.objects.cone.ConeFunction;
+import pl.truszewski.interpreter.objects.cone.ConeLateralSurfaceFunction;
+import pl.truszewski.interpreter.objects.cone.ConeTotalSurfaceFunction;
+import pl.truszewski.interpreter.objects.cone.ConeVolumeFunction;
+import pl.truszewski.interpreter.objects.cuboid.CuboidBaseSurfaceFunction;
+import pl.truszewski.interpreter.objects.cuboid.CuboidFunction;
+import pl.truszewski.interpreter.objects.cuboid.CuboidLateralSurfaceFunction;
+import pl.truszewski.interpreter.objects.cuboid.CuboidTotalSurfaceFunction;
+import pl.truszewski.interpreter.objects.cuboid.CuboidVolumeFunction;
+import pl.truszewski.interpreter.objects.cylinder.CylinderBaseSurfaceFunction;
+import pl.truszewski.interpreter.objects.cylinder.CylinderFunction;
+import pl.truszewski.interpreter.objects.cylinder.CylinderLateralSurfaceFunction;
+import pl.truszewski.interpreter.objects.cylinder.CylinderTotalSurfaceFunction;
+import pl.truszewski.interpreter.objects.cylinder.CylinderVolumeFunction;
+import pl.truszewski.interpreter.objects.iterator.IteratorHasNextFunction;
+import pl.truszewski.interpreter.objects.iterator.IteratorNextFunction;
+import pl.truszewski.interpreter.objects.list.AddListFunction;
+import pl.truszewski.interpreter.objects.list.ListFunction;
+import pl.truszewski.interpreter.objects.list.ListIteratorFunction;
+import pl.truszewski.interpreter.objects.pyramid.PyramidBaseSurfaceFunction;
+import pl.truszewski.interpreter.objects.pyramid.PyramidFunction;
+import pl.truszewski.interpreter.objects.pyramid.PyramidLateralSurfaceFunction;
+import pl.truszewski.interpreter.objects.pyramid.PyramidTotalSurfaceFunction;
+import pl.truszewski.interpreter.objects.pyramid.PyramidVolumeFunction;
+import pl.truszewski.interpreter.objects.sphere.SphereDiameterFunction;
+import pl.truszewski.interpreter.objects.sphere.SphereFunction;
+import pl.truszewski.interpreter.objects.sphere.SphereTotalSurfaceFunction;
+import pl.truszewski.interpreter.objects.sphere.SphereVolumeFunction;
 import pl.truszewski.programstructure.basic.Block;
 import pl.truszewski.programstructure.basic.FunctionDefinition;
 import pl.truszewski.programstructure.basic.Parameter;
@@ -88,4 +119,66 @@ public interface Visitor {
     void visit(ReturnStatement returnStatement);
 
     void visit(WhileStatement whileStatement);
+
+    void visit(PrintFunction printFunction);
+
+    void visit(CuboidFunction cuboidFunction);
+
+    void visit(CuboidVolumeFunction cuboidVolumeFunction);
+
+    void visit(CuboidBaseSurfaceFunction cuboidBaseSurfaceFunction);
+
+    void visit(CuboidLateralSurfaceFunction cuboidLateralSurfaceFunction);
+
+    void visit(CuboidTotalSurfaceFunction cuboidTotalSurfaceFunction);
+
+    void visit(PyramidBaseSurfaceFunction pyramidBaseSurfaceFunction);
+
+    void visit(PyramidFunction pyramidFunction);
+
+    void visit(PyramidLateralSurfaceFunction pyramidLateralSurfaceFunction);
+
+    void visit(PyramidTotalSurfaceFunction pyramidTotalSurfaceFunction);
+
+    void visit(PyramidVolumeFunction pyramidVolumeFunction);
+
+    void visit(ConeVolumeFunction cuboidVolumeFunction);
+
+    void visit(ConeTotalSurfaceFunction cuboidTotalSurfaceFunction);
+
+    void visit(ConeLateralSurfaceFunction coneLateralSurfaceFunction);
+
+    void visit(ConeBaseSurfaceFunction coneBaseSurfaceFunction);
+
+    void visit(ConeFunction coneFunction);
+
+    void visit(CylinderTotalSurfaceFunction cylinderTotalSurfaceFunction);
+
+    void visit(CylinderBaseSurfaceFunction cylinderBaseSurfaceFunction);
+
+    void visit(CylinderFunction cylinderFunction);
+
+    void visit(CylinderLateralSurfaceFunction cylinderLateralSurfaceFunction);
+
+    void visit(CylinderVolumeFunction cylinderVolumeFunction);
+
+    void visit(SphereTotalSurfaceFunction sphereTotalSurfaceFunction);
+
+    void visit(SphereVolumeFunction sphereVolumeFunction);
+
+    void visit(SphereFunction sphereFunction);
+
+    void visit(SphereDiameterFunction sphereDiameterFunction);
+
+    void visit(ListFunction listFunction);
+
+    void visit(AddListFunction addListFunction);
+
+    void visit(IteratorNextFunction iteratorNextFunction);
+
+    void visit(ListIteratorFunction listIteratorFunction);
+
+    void visit(IteratorHasNextFunction iteratorHasNextFunction);
+
+    void visit(ShowFiguresFunction showFiguresFunction);
 }

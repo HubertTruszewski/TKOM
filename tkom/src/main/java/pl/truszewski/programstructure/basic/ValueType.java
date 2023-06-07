@@ -11,5 +11,7 @@ public enum ValueType {
     SPHERE,
     CUBOID,
     PYRAMID,
-    SCREEN
+    LIST,
+    ITERATOR,
+    FIGURE
 }

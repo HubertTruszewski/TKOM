@@ -26,7 +26,7 @@ Dla kuli dostępne bedą metody do obliczenia średnicy, objętości oraz pola p
 
 Każdy z typów brył udostępnia dostęp do wartości atrybutów przez następujące pola:
 
--   prostopadłościan - a, b, c - długości krawędzi
+-   prostopadłościan - a, b, H - długości krawędzi
 -   ostrosłup prawidłowy trójkątny - a - długość krawędzi podstawy, H - wysokość ostrosłupa
 -   stożek - r - długość promienia podstawy, l - długość tworzącej stożka
 -   walec - r - długość promienia podstawy, H - wysokość walca
@@ -178,7 +178,8 @@ type                       = "int"
                            | "Sphere"
                            | "Cuboid"
                            | "Pyramid"
-                           | "Screen";
+                           | "List"
+                           | "Iterator";
 identifier                 = letter, {letter | digit};
 string_literal             = '"', {string_element}, '"';
 string_element             = letter | escape_character | digit | special_character;
